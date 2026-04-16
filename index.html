@@ -3,33 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>申報日程儀表板 2026</title>
+<title>FIM公告申報追蹤表</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #f5f4f0;
+    --bg: #eef7f8;
     --surface: #ffffff;
-    --surface2: #f0ede8;
-    --border: #e2ddd7;
-    --border2: #ccc8c0;
-    --text: #1a1816;
-    --text2: #6b6560;
-    --text3: #9e9891;
-    --accent: #2c5f8a;
-    --accent-light: #e8f0f7;
+    --surface2: #e0f2f4;
+    --border: #b2dde2;
+    --border2: #7fc4cc;
+    --text: #061a1e;
+    --text2: #1e4d56;
+    --text3: #3a7a88;
+    --accent: #1a8a9a;
+    --accent-light: #d4f0f4;
     --warn: #b87333;
     --warn-light: #fdf3e8;
     --danger: #8b3a3a;
     --danger-light: #faeaea;
-    --ok: #3a6b4a;
-    --ok-light: #e8f4ec;
-    --na: #7a7570;
-    --na-light: #f0ede8;
+    --ok: #1e7a6e;
+    --ok-light: #d4f2ee;
+    --na: #5a8a92;
+    --na-light: #e0f2f4;
     --radius: 8px;
     --radius-lg: 12px;
-    --shadow: 0 1px 3px rgba(0,0,0,0.08);
+    --shadow: 0 1px 6px rgba(26,138,154,0.10);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -71,7 +71,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
+    color: #ffffff;
     font-size: 14px;
     font-weight: 700;
     font-family: 'DM Mono', monospace;
@@ -448,7 +448,7 @@
 <header class="header">
   <div class="header-left">
     <div class="logo-mark">申</div>
-    <h1>申報日程儀表板 2026</h1>
+    <h1>FIM公告申報追蹤表</h1>
   </div>
   <div class="header-right">
     <span class="sync-status" id="sync-status">—</span>
@@ -668,7 +668,7 @@ function render() {
           <div class="uc-chips">
             <span class="chip ${chipCls}">${chipTxt}</span>
             ${r.person ? `<span class="chip gray">${r.person}</span>` : ''}
-            <span class="chip id">${r.id}</span>
+            <span class="chip id" style="${r.id==='不定期'?'color:var(--danger);border-color:var(--danger);font-weight:500;':''}">${r.id}</span>
           </div>
         </div>
         <div class="uc-days ${urgency}">
@@ -692,7 +692,7 @@ function render() {
     const dateStr  = `${r.due.getFullYear()}/${pad(r.due.getMonth()+1)}/${pad(r.due.getDate())}`;
     return `<tr>
       <td class="cell-date">${dateStr}</td>
-      <td class="cell-id">${r.id}</td>
+      <td class="cell-id" style="${r.id==='不定期'?'color:var(--danger);font-weight:500;':''}">${r.id}</td>
       <td class="cell-name">${r.name}</td>
       <td class="cell-person">${r.person || '—'}</td>
       <td class="cell-status"><span class="badge ${badgeCls}">${r.status || '待辦'}</span></td>
