@@ -3,33 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FIM公告申報追蹤表</title>
+<title>公告申報管理</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@300;400;500;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #eef7f8;
+    --bg: #fdf0f0;
     --surface: #ffffff;
-    --surface2: #e0f2f4;
-    --border: #b2dde2;
-    --border2: #7fc4cc;
-    --text: #061a1e;
-    --text2: #1e4d56;
-    --text3: #3a7a88;
-    --accent: #1a8a9a;
-    --accent-light: #d4f0f4;
+    --surface2: #fce9e9;
+    --border: #f4c9c9;
+    --border2: #e8a8a8;
+    --text: #1a0808;
+    --text2: #4a1f1f;
+    --text3: #7a4a4a;
+    --accent: #c06878;
+    --accent-light: #fce9ec;
     --warn: #b87333;
     --warn-light: #fdf3e8;
     --danger: #8b3a3a;
     --danger-light: #faeaea;
-    --ok: #1e7a6e;
-    --ok-light: #d4f2ee;
-    --na: #5a8a92;
-    --na-light: #e0f2f4;
+    --ok: #5a7a5a;
+    --ok-light: #e8f4e8;
+    --na: #8a7070;
+    --na-light: #f4eded;
     --radius: 8px;
     --radius-lg: 12px;
-    --shadow: 0 1px 6px rgba(26,138,154,0.10);
+    --shadow: 0 1px 6px rgba(192,104,120,0.10);
   }
 
   * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -397,7 +397,7 @@
   }
 
   .badge.done    { background: #fff8d6; color: #7a5c00; border: 1px solid #f0d060; }
-  .badge.pending { background: #fde8ef; color: #9c2a4a; border: 1px solid #f4a8c0; }
+  .badge.pending { background: #fce9ec; color: #9c2a4a; border: 1px solid #e8a8b8; }
   .badge.na      { background: var(--na-light); color: var(--na); }
 
   /* ── Empty state ── */
@@ -470,7 +470,7 @@
 <header class="header">
   <div class="header-left">
     <div class="logo-mark">申</div>
-    <h1>FIM公告申報追蹤表</h1>
+    <h1>公告申報管理</h1>
   </div>
   <div class="header-right">
     <span class="sync-status" id="sync-status">—</span>
