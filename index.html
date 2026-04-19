@@ -210,7 +210,7 @@
   }
 
   .stat-val {
-    font-size: 28px;
+    font-size: 40px;
     font-weight: 300;
     font-family: 'DM Mono', monospace;
     color: var(--text);
@@ -225,7 +225,7 @@
   .section-header {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    gap: 10px;
     margin-bottom: 12px;
     margin-top: 2rem;
   }
@@ -239,12 +239,15 @@
   }
 
   .section-count {
-    font-size: 11px;
+    font-size: 16px;
+    font-weight: 500;
     font-family: 'DM Mono', monospace;
-    color: var(--text3);
-    background: var(--surface2);
-    padding: 2px 8px;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 12px;
     border-radius: 20px;
+    min-width: 36px;
+    text-align: center;
   }
 
   /* ── Urgent cards ── */
@@ -436,6 +439,126 @@
     color: var(--text2);
   }
 
+  /* ── Done summary ── */
+  .done-summary {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 2px solid var(--border);
+  }
+
+  .done-summary-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+
+  .done-summary-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .done-badge-title {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text);
+    letter-spacing: .02em;
+  }
+
+  .done-total-chip {
+    font-size: 13px;
+    font-family: 'DM Mono', monospace;
+    font-weight: 500;
+    background: #fff8d6;
+    color: #7a5c00;
+    border: 1px solid #f0d060;
+    padding: 3px 12px;
+    border-radius: 20px;
+  }
+
+  .done-by-person {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 14px;
+    margin-bottom: 1.5rem;
+  }
+
+  .person-block {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  .person-block-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 14px;
+    background: var(--surface2);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .person-name {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .person-count {
+    font-size: 12px;
+    font-family: 'DM Mono', monospace;
+    color: var(--ok);
+    background: var(--ok-light);
+    padding: 2px 8px;
+    border-radius: 20px;
+    font-weight: 500;
+  }
+
+  .person-items {
+    padding: 8px 0;
+  }
+
+  .person-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    padding: 6px 14px;
+    border-bottom: 1px solid var(--border);
+    transition: background .1s;
+  }
+
+  .person-item:last-child { border-bottom: none; }
+  .person-item:hover { background: var(--surface2); }
+
+  .pi-check {
+    margin-top: 3px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: var(--ok-light);
+    border: 1.5px solid var(--ok);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .pi-check::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 3px;
+    border-left: 1.5px solid var(--ok);
+    border-bottom: 1.5px solid var(--ok);
+    transform: rotate(-45deg) translateY(-1px);
+  }
+
+  .pi-body { flex: 1; }
+  .pi-name { font-size: 12px; color: var(--text); line-height: 1.5; }
+  .pi-date { font-size: 11px; color: var(--text3); font-family: 'DM Mono', monospace; margin-top: 1px; }
+
   /* ── Error banner ── */
   .error-banner {
     background: var(--danger-light);
@@ -509,7 +632,7 @@
   <div class="stats-grid" id="stats-grid"></div>
 
   <div class="section-header">
-    <span class="section-title">即將到來的申報項目</span>
+    <span class="section-title">待申報項目</span>
     <span class="section-count" id="urgent-count">—</span>
   </div>
   <div class="urgent-list" id="urgent-list"></div>
@@ -531,6 +654,17 @@
       </thead>
       <tbody id="table-body"></tbody>
     </table>
+  </div>
+
+  <!-- 已達成總覽表 -->
+  <div class="done-summary">
+    <div class="done-summary-header">
+      <div class="done-summary-title">
+        <span class="done-badge-title">✓ 已申報項目</span>
+        <span class="done-total-chip" id="done-total">—</span>
+      </div>
+    </div>
+    <div class="done-by-person" id="done-by-person"></div>
   </div>
 
 </main>
@@ -667,8 +801,8 @@ function render() {
   /* stats */
   document.getElementById('stats-grid').innerHTML = `
     <div class="stat-card"><div class="stat-label">總項目</div><div class="stat-val">${total}</div></div>
-    <div class="stat-card"><div class="stat-label">已達成</div><div class="stat-val ok">${done}</div></div>
-    <div class="stat-card"><div class="stat-label">待辦</div><div class="stat-val warn">${pending}</div></div>
+    <div class="stat-card"><div class="stat-label">已申報項目</div><div class="stat-val ok">${done}</div></div>
+    <div class="stat-card"><div class="stat-label">待申報項目</div><div class="stat-val warn">${pending}</div></div>
     <div class="stat-card"><div class="stat-label">不適用</div><div class="stat-val">${na}</div></div>
     <div class="stat-card"><div class="stat-label">${range}天內到期</div><div class="stat-val ${urgent.length > 0 ? 'danger' : ''}">${urgent.length}</div></div>
   `;
@@ -724,6 +858,42 @@ function render() {
       <td class="cell-status"><span class="badge ${badgeCls}">${r.status || '待辦'}</span></td>
     </tr>`;
   }).join('');
+
+  /* done summary */
+  const doneRows = [...filtered].filter(r => r.status === '已達成').sort((a,b) => a.due - b.due);
+  document.getElementById('done-total').textContent = doneRows.length + ' 項';
+
+  const byPerson = {};
+  doneRows.forEach(r => {
+    const p = r.person || '（未指定）';
+    if (!byPerson[p]) byPerson[p] = [];
+    byPerson[p].push(r);
+  });
+
+  const personEl = document.getElementById('done-by-person');
+  if (doneRows.length === 0) {
+    personEl.innerHTML = '<div class="empty" style="padding:2rem;text-align:center;color:var(--text3);font-size:13px;">目前篩選條件下無已達成項目</div>';
+  } else {
+    personEl.innerHTML = Object.entries(byPerson)
+      .sort((a,b) => b[1].length - a[1].length)
+      .map(([person, items]) => `
+        <div class="person-block">
+          <div class="person-block-header">
+            <span class="person-name">${person}</span>
+            <span class="person-count">${items.length} 項</span>
+          </div>
+          <div class="person-items">
+            ${items.map(r => `
+              <div class="person-item">
+                <div class="pi-check"></div>
+                <div class="pi-body">
+                  <div class="pi-name">${r.name}</div>
+                  <div class="pi-date">${r.due.getFullYear()}/${pad(r.due.getMonth()+1)}/${pad(r.due.getDate())} &nbsp;·&nbsp; ${r.id}</div>
+                </div>
+              </div>`).join('')}
+          </div>
+        </div>`).join('');
+  }
 }
 
 /* ── Helpers ── */
