@@ -853,7 +853,7 @@ function render() {
     <div class="stat-card"><div class="stat-label">已申報項目</div><div class="stat-val ok">${done}</div></div>
     <div class="stat-card"><div class="stat-label">待申報項目</div><div class="stat-val warn">${pending}</div></div>
     <div class="stat-card"><div class="stat-label">不適用</div><div class="stat-val">${na}</div></div>
-    <div class="stat-card"><div class="stat-label">${range}天內到期</div><div class="stat-val ${urgent.length > 0 ? 'danger' : ''}">${urgent.length}</div></div>
+    <div class="stat-card" style="background:#ffe600;border:2.5px solid #e00000;"><div class="stat-label" style="color:#a00000;">${range}天內到期</div><div class="stat-val" style="color:#e00000;font-weight:700;">${urgent.length}</div></div>
   `;
 
   /* urgent list */
