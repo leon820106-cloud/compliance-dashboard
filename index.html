@@ -250,6 +250,12 @@
     text-align: center;
   }
 
+  .section-count.alert {
+    font-weight: 700;
+    color: #e00000;
+    background: #ffe600;
+  }
+
   /* ── Urgent cards ── */
   .urgent-list {
     display: flex;
@@ -437,6 +443,43 @@
   .loading-text {
     font-size: 13px;
     color: var(--text2);
+  }
+
+  .collapse-btn {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 4px 12px;
+    border: 1px solid var(--border2);
+    border-radius: 20px;
+    background: var(--surface);
+    color: var(--text3);
+    font-size: 12px;
+    font-family: 'Noto Sans TC', sans-serif;
+    cursor: pointer;
+    transition: all .15s;
+    white-space: nowrap;
+  }
+
+  .collapse-btn:hover {
+    background: var(--surface2);
+    color: var(--text2);
+    border-color: var(--accent);
+  }
+
+  .collapse-btn span { font-size: 10px; transition: transform .2s; }
+
+  .collapsible {
+    overflow: hidden;
+    transition: max-height .35s ease, opacity .25s ease;
+    max-height: 9999px;
+    opacity: 1;
+  }
+
+  .collapsible.collapsed {
+    max-height: 0;
+    opacity: 0;
   }
 
   /* ── Done summary ── */
@@ -632,16 +675,19 @@
   <div class="stats-grid" id="stats-grid"></div>
 
   <div class="section-header">
-    <span class="section-title">待申報項目</span>
-    <span class="section-count" id="urgent-count">—</span>
+    <span class="section-title">即將到期的待申報項目</span>
+    <span class="section-count alert" id="urgent-count">—</span>
   </div>
   <div class="urgent-list" id="urgent-list"></div>
 
   <div class="section-header">
     <span class="section-title">申報項目總覽</span>
     <span class="section-count" id="table-count">—</span>
+    <button class="collapse-btn" id="table-collapse-btn" onclick="toggleTable()">
+      <span id="table-collapse-icon">▲</span> 收起
+    </button>
   </div>
-  <div class="table-wrap">
+  <div class="table-wrap collapsible" id="table-wrap">
     <table>
       <thead>
         <tr>
@@ -663,8 +709,11 @@
         <span class="done-badge-title">✓ 已申報項目</span>
         <span class="done-total-chip" id="done-total">—</span>
       </div>
+      <button class="collapse-btn" id="done-collapse-btn" onclick="toggleDone()">
+        <span id="done-collapse-icon">▲</span> 收起
+      </button>
     </div>
-    <div class="done-by-person" id="done-by-person"></div>
+    <div class="done-by-person collapsible" id="done-by-person"></div>
   </div>
 
 </main>
@@ -931,6 +980,25 @@ function hideError() {
 
 function hideLoading() {
   document.getElementById('loading').classList.add('hidden');
+}
+
+/* ── Toggle collapse ── */
+function toggleTable() {
+  const wrap = document.getElementById('table-wrap');
+  const icon = document.getElementById('table-collapse-icon');
+  const btn  = document.getElementById('table-collapse-btn');
+  const isCollapsed = wrap.classList.toggle('collapsed');
+  icon.style.transform = isCollapsed ? 'rotate(180deg)' : '';
+  btn.childNodes[2].textContent = isCollapsed ? ' 展開' : ' 收起';
+}
+
+function toggleDone() {
+  const wrap = document.getElementById('done-by-person');
+  const icon = document.getElementById('done-collapse-icon');
+  const btn  = document.getElementById('done-collapse-btn');
+  const isCollapsed = wrap.classList.toggle('collapsed');
+  icon.style.transform = isCollapsed ? 'rotate(180deg)' : '';
+  btn.childNodes[2].textContent = isCollapsed ? ' 展開' : ' 收起';
 }
 
 /* ── Event listeners ── */
